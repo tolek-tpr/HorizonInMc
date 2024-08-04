@@ -25,11 +25,11 @@ public class HorizonBlocks {
         "cauldron_wall_block",
 true
     );
-    public static final Block LIGHT_LINE = register(
+    /*public static final Block LIGHT_LINE = register(
             new Block(AbstractBlock.Settings.create().luminance(state -> 15).mapColor(MapColor.LIGHT_BLUE).noCollision()),
             "light_line",
             true
-    );
+    );*/
 
     public static Block register(Block block, String name, boolean shouldRegisterItem) {
         Identifier id = Identifier.of(HorizonInMc.MOD_ID, name);
@@ -46,7 +46,7 @@ true
         ItemGroupEvents.modifyEntriesEvent(HorizonItems.CUSTOM_ITEM_GROUP_KEY).register((itemGroup) -> {
                 itemGroup.add(HorizonBlocks.CONDENSED_DIRT.asItem());
                 itemGroup.add(HorizonBlocks.CAULDRON_WALL_BLOCK.asItem());
-                itemGroup.add(HorizonBlocks.LIGHT_LINE.asItem());
+                //itemGroup.add(HorizonBlocks.LIGHT_LINE.asItem());
             }
         );
     }

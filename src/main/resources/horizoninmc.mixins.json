@@ -3,7 +3,12 @@
 	"package": "pl.epsi.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"client.ExampleMixin"
+		"client.ChatHudMixin",
+		"client.GamRendererMixin",
+		"client.KeyboardMixin",
+		"client.MflpClientScheduler",
+		"client.MinecraftClientMixin",
+		"client.MouseMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
