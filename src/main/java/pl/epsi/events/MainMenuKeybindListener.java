@@ -1,13 +1,20 @@
 package pl.epsi.events;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 import pl.epsi.HorizonInMc;
 import pl.epsi.event.EventImpl;
 import pl.epsi.event.EventManager;
 import pl.epsi.event.KeyboardListener;
 import pl.epsi.gui.*;
+import pl.epsi.render.SubtitleRenderer;
 import pl.epsi.util.InstancedValues;
 
 public class MainMenuKeybindListener extends EventImpl implements KeyboardListener {
@@ -26,6 +33,12 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
 
     @Override
     public void onKey(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_0 && InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
+            DrawContext context = new DrawContext(MinecraftClient.getInstance(),
+                    MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers());
+            SubtitleRenderer sr = new SubtitleRenderer(100, 100);
+            sr.drawCenteredSubtitle(Text.of("HELLO"), 50, 0xffffff);
+        }
         if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
             if (keyCode == GLFW.GLFW_KEY_TAB) {
                 iv.screen = new QuestScreen(2);

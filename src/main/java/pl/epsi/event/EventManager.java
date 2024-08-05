@@ -50,7 +50,7 @@ public class EventManager {
         {
             e.printStackTrace();
 
-            CrashReport report = CrashReport.create(e, "Firing MFLP event");
+            CrashReport report = CrashReport.create(e, "Firing Horizon event");
             CrashReportSection section = report.addElement("Affected event");
             section.add("Event class", () -> event.getClass().getName());
 
@@ -79,7 +79,7 @@ public class EventManager {
             e.printStackTrace();
 
             CrashReport report =
-                    CrashReport.create(e, "Adding MFLP event listener");
+                    CrashReport.create(e, "Adding Horizon event listener");
             CrashReportSection section = report.addElement("Affected listener");
             section.add("Listener type", () -> type.getName());
             section.add("Listener class", () -> listener.getClass().getName());
@@ -103,7 +103,7 @@ public class EventManager {
             e.printStackTrace();
 
             CrashReport report =
-                    CrashReport.create(e, "Removing MFLP event listener");
+                    CrashReport.create(e, "Removing Horizon event listener");
             CrashReportSection section = report.addElement("Affected listener");
             section.add("Listener type", () -> type.getName());
             section.add("Listener class", () -> listener.getClass().getName());

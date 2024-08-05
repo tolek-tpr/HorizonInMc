@@ -5,6 +5,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
+import pl.epsi.interfaces.ISubtitleRenderer;
 
 public class SubtitleRenderer {
 
@@ -13,8 +14,8 @@ public class SubtitleRenderer {
     private int width;
     private TextRenderer tx = MinecraftClient.getInstance().textRenderer;
 
-    public SubtitleRenderer(DrawContext context, int width, int height) {
-        this.context = context;
+    public SubtitleRenderer(int width, int height) {
+        this.context = ((ISubtitleRenderer) MinecraftClient.getInstance()).getDrawContext();
         this.width = width;
         this.height = height;
     }
