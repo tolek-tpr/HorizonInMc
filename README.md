@@ -9,3 +9,5 @@
 when standing in it.
  - some custom tree blocks and leaf blocks
  - some rocks
+ - remake the cauldron wall block texture cuz its shit
+ - a light strip
