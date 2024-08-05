@@ -32,14 +32,28 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
                 MinecraftClient.getInstance().setScreen(iv.screen);
             }
             if (MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE) {
-
                 switch (keyCode) {
-                    case GLFW.GLFW_KEY_Q -> {
+                    case GLFW.GLFW_KEY_Q ->
                         handleScreenChangeLeft();
-                    }
-                    case GLFW.GLFW_KEY_E -> {
+                    case GLFW.GLFW_KEY_E ->
                         handleScreenChangeRight();
-                        this.updateScreen();
+                }
+            }
+            if (MinecraftClient.getInstance().currentScreen instanceof InventoryScreen) {
+                switch (keyCode) {
+                    case GLFW.GLFW_KEY_W ->  {
+                        if (iv.inventoryEntrySelected == 0) {
+                            iv.inventoryEntrySelected = 6;
+                        } else {
+                            iv.inventoryEntrySelected--;
+                        }
+                    }
+                    case GLFW.GLFW_KEY_S -> {
+                        if (iv.inventoryEntrySelected == 6) {
+                            iv.inventoryEntrySelected = 0;
+                        } else {
+                            iv.inventoryEntrySelected++;
+                        }
                     }
                 }
             }

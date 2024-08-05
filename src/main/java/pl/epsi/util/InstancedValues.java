@@ -18,5 +18,6 @@ public class InstancedValues {
 
     public MainMenuScreenE screen;
     public ArrayList<Integer> screenExclamationUpdate = new ArrayList<>();
+    public int inventoryEntrySelected = 0;
 
 }
