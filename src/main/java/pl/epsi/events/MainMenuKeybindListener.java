@@ -7,8 +7,7 @@ import pl.epsi.HorizonInMc;
 import pl.epsi.event.EventImpl;
 import pl.epsi.event.EventManager;
 import pl.epsi.event.KeyboardListener;
-import pl.epsi.gui.MainMenuScreenE;
-import pl.epsi.gui.QuestScreen;
+import pl.epsi.gui.*;
 import pl.epsi.util.InstancedValues;
 
 public class MainMenuKeybindListener extends EventImpl implements KeyboardListener {
@@ -36,24 +35,37 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
 
                 switch (keyCode) {
                     case GLFW.GLFW_KEY_Q -> {
-                        if (iv.screen.getMenuSelected() == 0) {
-                            iv.screen = new QuestScreen(4);
-                        } else {
-                            iv.screen = new QuestScreen(iv.screen.getMenuSelected() - 1);
-                        }
-                        this.updateScreen();
+                        handleScreenChangeLeft();
                     }
                     case GLFW.GLFW_KEY_E -> {
-                        if (iv.screen.getMenuSelected() == 4) {
-                            iv.screen = new QuestScreen(0);
-                        } else {
-                            iv.screen = new QuestScreen(iv.screen.getMenuSelected() + 1);
-                        }
+                        handleScreenChangeRight();
                         this.updateScreen();
                     }
                 }
             }
         }
+    }
+
+    private void handleScreenChangeLeft() {
+        switch (iv.screen.getMenuSelected()) {
+            case 0 -> iv.screen = new NotebookScreen(4);
+            case 1 -> iv.screen = new InventoryScreen(0);
+            case 2 -> iv.screen = new SkillsScreen(1);
+            case 3 -> iv.screen = new MapScreen(2);
+            case 4 -> iv.screen = new QuestScreen(3);
+        }
+        this.updateScreen();
+    }
+
+    private void handleScreenChangeRight() {
+        switch (iv.screen.getMenuSelected()) {
+            case 0 -> iv.screen = new SkillsScreen(1);
+            case 1 -> iv.screen = new MapScreen(2);
+            case 2 -> iv.screen = new QuestScreen(3);
+            case 3 -> iv.screen = new NotebookScreen(4);
+            case 4 -> iv.screen = new InventoryScreen(0);
+        }
+        this.updateScreen();
     }
 
     private void updateScreen() {

@@ -12,6 +12,7 @@ import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
+import pl.epsi.util.InstancedValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +32,18 @@ public class MenuSelectorModule extends ContainerWidget {
     private final Identifier QUESTS_SEL = new Identifier("horizoninmc", "quests_text_selected");
     private final Identifier NOTEBOOK = new Identifier("horizoninmc", "notebook_text");
     private final Identifier NOTEBOOK_SEL = new Identifier("horizoninmc", "notebook_text_selected");
+    private final Identifier EXCLAMATION_POINT = new Identifier("horizoninmc", "exclamation_point");
     private int width;
     private int menuSelected;
-    private TextRenderer tx = MinecraftClient.getInstance().textRenderer;
 
     public MenuSelectorModule(int width, int y, int menuSelected) {
         super(width / 2, y, (width / 4) * 2, 40, Text.literal("MenuSelectorModule"));
         this.width = width;
         this.menuSelected = menuSelected;
+        InstancedValues.getInstance().screenExclamationUpdate.add(0);
+        InstancedValues.getInstance().screenExclamationUpdate.add(1);
+        InstancedValues.getInstance().screenExclamationUpdate.add(3);
+        InstancedValues.getInstance().screenExclamationUpdate.add(4);
     }
 
     @Override
@@ -50,17 +55,17 @@ public class MenuSelectorModule extends ContainerWidget {
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         int j = this.getY();
         context.drawGuiTexture(SELECT_LEFT, this.width / 4, j, 24, 24);
-        context.drawGuiTexture(SELECT_RIGHT, this.width - this.width / 4, j, 24, 24);
+        context.drawGuiTexture(SELECT_RIGHT, this.width - this.width / 4 - 25, j, 24, 24);
 
         if (this.menuSelected == 0) {
-            context.drawGuiTexture(INVENTORY_SEL, this.width / 4 + 40, j + 2, 76, 24);
+            context.drawGuiTexture(INVENTORY_SEL, this.width / 2 - 206, j + 2, 76, 24);
         } else {
-            context.drawGuiTexture(INVENTORY, this.width / 4 + 40, j + 6, 76, 12);
+            context.drawGuiTexture(INVENTORY, this.width / 2 - 206, j + 6, 76, 12);
         }
         if (this.menuSelected == 1) {
-            context.drawGuiTexture(SKILLS_SEL, this.width / 4 + 146, j + 2, 50, 24);
+            context.drawGuiTexture(SKILLS_SEL, this.width / 2 - 97, j + 2, 50, 24);
         } else {
-            context.drawGuiTexture(SKILLS, this.width / 4 + 146, j + 6, 50, 12);
+            context.drawGuiTexture(SKILLS, this.width / 2 - 97, j + 6, 50, 12);
         }
         if (this.menuSelected == 2) {
             context.drawGuiTexture(MAP_SEL, this.width / 2 - 27 / 2, j + 2, 27, 24);
@@ -68,15 +73,23 @@ public class MenuSelectorModule extends ContainerWidget {
             context.drawGuiTexture(MAP, this.width / 2 - 27 / 2, j + 6, 27, 12);
         }
         if (this.menuSelected == 3) {
-            context.drawGuiTexture(QUESTS_SEL, this.width / 2 + 37, j + 2, 52, 24);
+            context.drawGuiTexture(QUESTS_SEL, this.width / 2 + 47, j + 2, 52, 24);
         } else {
-            context.drawGuiTexture(QUESTS, this.width / 2 + 37, j + 6, 52, 12);
+            context.drawGuiTexture(QUESTS, this.width / 2 + 47, j + 6, 52, 12);
         }
         if (this.menuSelected == 4) {
-            context.drawGuiTexture(NOTEBOOK_SEL, this.width / 2 + 109, j + 2, 69, 24);
+            context.drawGuiTexture(NOTEBOOK_SEL, this.width / 2 + 130, j + 2, 69, 24);
         } else {
-            context.drawGuiTexture(NOTEBOOK, this.width / 2 + 109, j + 6, 69, 12);
+            context.drawGuiTexture(NOTEBOOK, this.width / 2 + 130, j + 6, 69, 12);
         }
+
+        InstancedValues.getInstance().screenExclamationUpdate.forEach((i) -> {
+            if (i == 0) { context.drawGuiTexture(EXCLAMATION_POINT, this.width / 2 - 168 - 4, j + 23, 8, 8); }
+            if (i == 1) { context.drawGuiTexture(EXCLAMATION_POINT, this.width / 2 - 72 - 4, j + 23, 8, 8); }
+            if (i == 2) { context.drawGuiTexture(EXCLAMATION_POINT, this.width / 2 - 4, j + 23, 8, 8); }
+            if (i == 3) { context.drawGuiTexture(EXCLAMATION_POINT, this.width / 2 + 73 - 4, j + 23, 8, 8); }
+            if (i == 4) { context.drawGuiTexture(EXCLAMATION_POINT, this.width / 2 + 164 - 4, j + 23, 8, 8); }
+        });
 
     }
 

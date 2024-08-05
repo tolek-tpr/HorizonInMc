@@ -6,5 +6,9 @@
     "block.horizoninmc.condensed_dirt": "Condensed Dirt",
     "block.horizoninmc.cauldron_wall_block": "Cauldron Wall Block",
 
-    "screen.horizoninmc.quest_screen": "Quest Screen"
+    "screen.horizoninmc.inventory_screen": "Inventory Screen",
+    "screen.horizoninmc.skills_screen": "Skills Screen",
+    "screen.horizoninmc.map_screen": "Map Screen",
+    "screen.horizoninmc.quest_screen": "Quest Screen",
+    "screen.horizoninmc.notebook_screen": "Notebook Screen"
 }

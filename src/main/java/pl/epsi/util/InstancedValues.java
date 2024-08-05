@@ -3,6 +3,8 @@ package pl.epsi.util;
 import pl.epsi.gui.MainMenuScreenE;
 import pl.epsi.gui.QuestScreen;
 
+import java.util.ArrayList;
+
 public class InstancedValues {
 
     private static InstancedValues instance;
@@ -15,5 +17,6 @@ public class InstancedValues {
     }
 
     public MainMenuScreenE screen;
+    public ArrayList<Integer> screenExclamationUpdate = new ArrayList<>();
 
 }
