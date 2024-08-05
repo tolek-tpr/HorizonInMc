@@ -10,5 +10,8 @@
     "screen.horizoninmc.skills_screen": "Skills Screen",
     "screen.horizoninmc.map_screen": "Map Screen",
     "screen.horizoninmc.quest_screen": "Quest Screen",
-    "screen.horizoninmc.notebook_screen": "Notebook Screen"
+    "screen.horizoninmc.notebook_screen": "Notebook Screen",
+
+    "customItem.horizoninmc.blaze": "Blaze",
+    "customItem.horizoninmc.blaze.description": "An extremely flammable biofuel processed by machines. Blaze Canisters can be detonated by shooting them with a Fire Arrow."
 }

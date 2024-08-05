@@ -33,12 +33,6 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
 
     @Override
     public void onKey(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == GLFW.GLFW_KEY_0 && InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
-            DrawContext context = new DrawContext(MinecraftClient.getInstance(),
-                    MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers());
-            SubtitleRenderer sr = new SubtitleRenderer(100, 100);
-            sr.drawCenteredSubtitle(Text.of("HELLO"), 50, 0xffffff);
-        }
         if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
             if (keyCode == GLFW.GLFW_KEY_TAB) {
                 iv.screen = new QuestScreen(2);
