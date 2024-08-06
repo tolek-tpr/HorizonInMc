@@ -28,6 +28,7 @@ public class CustomInventory {
                 .setStackSize(15);
         this.addItem(s, 10);
         this.addItem(new TestItem4(), 10);
+        this.addItem(new ChillwaterItem(), 51);
     }
 
     public static CustomInventory getInstance() {

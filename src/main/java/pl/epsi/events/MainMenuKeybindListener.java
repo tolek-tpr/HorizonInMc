@@ -34,7 +34,7 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
     @Override
     public void onKey(int keyCode, int scanCode, int modifiers) {
         if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
-            if (keyCode == GLFW.GLFW_KEY_TAB) {
+            if (keyCode == GLFW.GLFW_KEY_TAB && !(MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE)) {
                 iv.screen = new QuestScreen(2);
                 MinecraftClient.getInstance().setScreen(iv.screen);
             }
@@ -47,8 +47,10 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
                 }
             }
             if (MinecraftClient.getInstance().currentScreen instanceof InventoryScreen) {
+
                 switch (keyCode) {
                     case GLFW.GLFW_KEY_W ->  {
+                        if (isInventorySubGroupOpen()) return;
                         if (iv.inventoryEntrySelected == 0) {
                             iv.inventoryEntrySelected = 6;
                         } else {
@@ -56,6 +58,7 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
                         }
                     }
                     case GLFW.GLFW_KEY_S -> {
+                        if (isInventorySubGroupOpen()) return;
                         if (iv.inventoryEntrySelected == 6) {
                             iv.inventoryEntrySelected = 0;
                         } else {
@@ -67,7 +70,17 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
         }
     }
 
+    private boolean isInventorySubGroupOpen() {
+        if (MinecraftClient.getInstance().currentScreen instanceof InventoryScreen) {
+            InventoryScreen screen = (InventoryScreen) MinecraftClient.getInstance().currentScreen;
+            return screen.subCategoryEntered;
+        } else {
+            return false;
+        }
+    }
+
     private void handleScreenChangeLeft() {
+        if (isInventorySubGroupOpen()) return;
         switch (iv.screen.getMenuSelected()) {
             case 0 -> iv.screen = new NotebookScreen(4);
             case 1 -> iv.screen = new InventoryScreen(0);
@@ -79,6 +92,7 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
     }
 
     private void handleScreenChangeRight() {
+        if (isInventorySubGroupOpen()) return;
         switch (iv.screen.getMenuSelected()) {
             case 0 -> iv.screen = new SkillsScreen(1);
             case 1 -> iv.screen = new MapScreen(2);

@@ -31,10 +31,6 @@ public class InventorySlotModule extends ContainerWidget {
         super(x, y, 48, 48, Text.literal("InventorySlotModule"));
         this.item = item; // if stack size == -1 then dont render max size;
         this.stackAmount = stackAmount;
-
-        InvisibleButton button = new InvisibleButton(x, y + 30, scale, scale, Text.literal("e"), (e) -> { HorizonInMc.LOGGER.info("PRESSEDDDD"); });
-        children.add(button);
-        children.add(ButtonWidget.builder(Text.literal("A"), (e) -> {System.out.println("sss");}).build());
     }
 
     @Override
@@ -42,8 +38,12 @@ public class InventorySlotModule extends ContainerWidget {
         return children;
     }
 
+    public CustomItem getItem() {
+        return item;
+    }
+
     @Override
-    protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         int y = this.getY();
         int x = this.getX();
         context.drawGuiTexture(ITEM_BACKDROP, x, y, scale, scale);
@@ -59,7 +59,6 @@ public class InventorySlotModule extends ContainerWidget {
         } else {
             context.drawTextWithShadow(tx, stackAmount + "/" + item.getSettings().getStackSize(), x, y + scale - tx.fontHeight, 0xffffff);
         }
-        this.children().forEach(e -> e.render(context, mouseX, mouseY, delta));
     }
 
     @Override
