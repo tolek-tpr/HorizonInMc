@@ -17,6 +17,7 @@ import pl.epsi.events.TravelToUpdateDetector;
 import pl.epsi.items.HorizonItems;
 import pl.epsi.player.CustomPlayer;
 import pl.epsi.player.quest.*;
+import pl.epsi.render.SubRenderer;
 import pl.epsi.render.SubtitleRenderer;
 import pl.epsi.util.HorizonUtil;
 
@@ -27,7 +28,7 @@ public class HorizonInMc implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("horizoninmc");
 	public static final String MOD_ID = "horizoninmc";
 	public ArrayList<EventImpl> events = new ArrayList<>();
-
+	public static final SubRenderer subtitleRenderer = new SubRenderer();
 
 	@Override
 	public void onInitialize() {
@@ -38,6 +39,7 @@ public class HorizonInMc implements ModInitializer {
 		events.add(new MainMenuKeybindListener());
 		events.add(new TravelToUpdateDetector());
 		events.add(new TravelToMarkerRenderer());
+		events.add(subtitleRenderer);
 
 		events.forEach(e -> e.setEnabled(true));
 

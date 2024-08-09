@@ -72,8 +72,6 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
 
         worldToScreenSpace.transformProject(position);
 
-        //System.out.println(position.x + " | " + position.y + " | " + position.z);
-
         if (position.x > width || position.y > height || position.z < 0 ||
             position.x < 0 || position.y < 0 || position.z > 1) return;
         context.drawGuiTexture(i, (int) position.x, (int) position.y, 16, 16);

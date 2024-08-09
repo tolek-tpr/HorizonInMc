@@ -1,5 +1,8 @@
 package pl.epsi.mixin.client;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
+import pl.epsi.HorizonInMc;
 import pl.epsi.event.EventManager;
 import net.minecraft.client.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
