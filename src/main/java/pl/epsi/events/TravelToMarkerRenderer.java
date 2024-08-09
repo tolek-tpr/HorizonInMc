@@ -17,8 +17,6 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
 
     private final MinecraftClient client = MinecraftClient.getInstance();
     private final CustomPlayer player = CustomPlayer.getInstance();
-    private DrawContext context;
-    private float tickDelta;
     private Quest selectedQuest = player.getQuest();
     private QuestStep step;
     private TravelToObjective objective;
@@ -35,10 +33,6 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
 
     @Override
     public void onRender(DrawContext context, float tickDelta) {
-        this.context = context;
-        this.tickDelta = tickDelta;
-
-        if (this.context == null) return;
         this.selectedQuest = player.getQuest();
         if (selectedQuest == null) return;
         this.step = selectedQuest.getSteps().get(selectedQuest.currentStep);
@@ -48,14 +42,14 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
         }
         if (objective == null) return;
 
-        this.draw(this.context, objective);
+        this.draw(context, tickDelta, objective);
     }
 
     public double getFarPlaceViewDistance() {
         return client.gameRenderer.getViewDistance() * 4D;
     }
 
-    public void draw(DrawContext context, TravelToObjective objective) {
+    public void draw(DrawContext context, float tickDelta, TravelToObjective objective) {
         Camera camera = client.gameRenderer.getCamera();
         Vector3d position = new Vector3d(objective.x, objective.y, objective.z);
         Matrix4d worldToScreenSpace = new Matrix4d();
@@ -78,6 +72,10 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
 
         worldToScreenSpace.transformProject(position);
 
+        //System.out.println(position.x + " | " + position.y + " | " + position.z);
+
+        if (position.x > width || position.y > height || position.z < 0 ||
+            position.x < 0 || position.y < 0 || position.z > 1) return;
         context.drawGuiTexture(i, (int) position.x, (int) position.y, 16, 16);
     }
 
