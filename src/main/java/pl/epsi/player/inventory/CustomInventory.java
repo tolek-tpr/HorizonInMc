@@ -21,14 +21,23 @@ public class CustomInventory {
 
     private CustomInventory() {
         this.addItem(new BlazeItem(), 10);
-        this.addItem(new TestItem1(), 10);
-        this.addItem(new TestItem2(), 10);
-        TestItem3 s = new TestItem3();
-        s.getSettings()//.setCategory(InventoryCategory.AMMO);
-                .setStackSize(15);
-        this.addItem(s, 10);
-        this.addItem(new TestItem4(), 10);
         this.addItem(new ChillwaterItem(), 51);
+        this.addItem(new NoraLegacySpear(), 1);
+        TestItem1 s0 = new TestItem1();
+        s0.getSettings().setRarity(2);
+        TestItem2 s1 = new TestItem2();
+        s1.getSettings().setRarity(3);
+        TestItem3 s2 = new TestItem3();
+        s2.getSettings().setRarity(4);
+        TestItem4 s3 = new TestItem4();
+        s3.getSettings().setRarity(1);
+
+
+        this.addItem(s0, 10);
+        this.addItem(s1, 10);
+        this.addItem(s2, 10);
+        this.addItem(s3, 10);
+
     }
 
     public static CustomInventory getInstance() {

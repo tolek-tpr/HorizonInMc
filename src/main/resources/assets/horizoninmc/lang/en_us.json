@@ -14,6 +14,14 @@
 
     "customItem.horizoninmc.blaze": "Blaze",
     "customItem.horizoninmc.blaze.description": "An extremely flammable biofuel processed by machines. Blaze Canisters can be detonated by shooting them with a Fire Arrow.",
+    "customItem.horizoninmc.blaze.sources": "Obtained from machines that use Fire weapons, or carry Blaze Canisters or intact Blaze Sacs. Tear off the canisters to harvest more. Merchants",
+    "customItem.horizoninmc.blaze.uses": "Crafting ammunition and traps that deal Fire damage to burn enemies and damage them over time.",
+
     "customItem.horizoninmc.chillwater": "Chillwater",
-    "customItem.horizoninmc.chillwater.description": "A liquid coolant used by machines to regulate internal functions. Chillwater Canisters can be detonated by shooting them with a Frost Arrow."
+    "customItem.horizoninmc.chillwater.description": "A liquid coolant used by machines to regulate internal functions. Chillwater Canisters can be detonated by shooting them with a Frost Arrow.",
+    "customItem.horizoninmc.chillwater.sources": "Obtained from machines that use Frost weapons, or carry Chillwater Canisters or intact Chillwater Sacs. Tear off the canisters to harvest more. Merchants",
+    "customItem.horizoninmc.chillwater.uses": "Crafting ammunition that deals Frost damage and makes enemies Brittle, during which they are vulnerable to Impact damage",
+
+    "customItem.horizoninmc.noraLegacySpear": "Nora Legacy Spear",
+    "customItem.horizoninmc.noraLegacySpear.description": "A powerful, hi-tech spear that honors the memory of a beloved guardian. Equipped with the Master Override, a module that grants the ability to override unlocked machines, and a Resonator to store and release energy. Allows access to Zero Down systems. Ideal for melee combat."
 }

@@ -1,5 +1,6 @@
 package pl.epsi.gui.modules;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -35,6 +36,7 @@ public class InventoryTypeSelectorModule extends ContainerWidget {
     private final Identifier STRIKE_PIECES_TEXT_SELECTED = new Identifier("horizoninmc", "inventory/strike_pieces_text_selected");
     private final Identifier SPECIAL_GEAR_TEXT = new Identifier("horizoninmc", "inventory/special_gear_text");
     private final Identifier SPECIAL_GEAR_TEXT_SELECTED = new Identifier("horizoninmc", "inventory/special_gear_text_selected");
+    private final Identifier WEAPONS_ICON = new Identifier("horizoninmc", "inventory/weapons_icon");
     private boolean drawNames;
 
     public InventoryTypeSelectorModule(int x, int y, int height, boolean drawNames) {
@@ -50,6 +52,11 @@ public class InventoryTypeSelectorModule extends ContainerWidget {
         int j = this.getY();
         context.drawGuiTexture(SELECT_UP, this.width / 2 - 10, j, 20, 20);
         context.drawGuiTexture(SELECT_DOWN, this.width / 2 - 10, j + 210, 20, 20);
+
+        RenderSystem.enableBlend();
+        context.drawGuiTexture(WEAPONS_ICON, x + 15, j + 30, 16, 16);
+        RenderSystem.disableBlend();
+
         if (drawNames) {
             if (iv.inventoryEntrySelected == 0) {
                 context.drawGuiTexture(WEAPONS_TEXT_SELECTED, x + 40, j + 30, 64, 10);

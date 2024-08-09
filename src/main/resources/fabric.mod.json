@@ -18,6 +18,9 @@
 	"entrypoints": {
 		"main": [
 			"pl.epsi.HorizonInMc"
+		],
+		"client": [
+			"pl.epsi.events.FabricEvents"
 		]
 	},
 	"mixins": [

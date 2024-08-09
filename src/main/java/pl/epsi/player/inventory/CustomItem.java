@@ -21,4 +21,8 @@ public abstract class CustomItem {
     public Text getItemName() {
         return itemName;
     }
+
+    public Text getDescription() {
+        return description;
+    }
 }

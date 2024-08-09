@@ -24,6 +24,9 @@ public class InventorySlotModule extends ContainerWidget {
     private Identifier ITEM_BACKDROP = new Identifier("horizoninmc", "inventory/item_backdrop");
     private Identifier COMMON_ITEM_BACKDROP = new Identifier("horizoninmc", "inventory/common_item_backdrop");
     private Identifier UNCOMMON_ITEM_BACKDROP = new Identifier("horizoninmc", "inventory/uncommon_item_backdrop");
+    private Identifier RARE_ITEM_BACKDROP = new Identifier("horizoninmc", "inventory/rare_item_backdrop");
+    private Identifier VERY_RARE_ITEM_BACKDROP = new Identifier("horizoninmc", "inventory/very_rare_item_backdrop");
+    private Identifier LEGENDARY_ITEM_BACKDROP = new Identifier("horizoninmc", "inventory/legendary_item_backdrop");
     private final TextRenderer tx = MinecraftClient.getInstance().textRenderer;
     public static final int scale = 48;
 
@@ -52,6 +55,12 @@ public class InventorySlotModule extends ContainerWidget {
                 context.drawGuiTexture(COMMON_ITEM_BACKDROP, x, y, scale, scale);
             case 1 ->
                 context.drawGuiTexture(UNCOMMON_ITEM_BACKDROP, x, y, scale, scale);
+            case 2 ->
+                    context.drawGuiTexture(RARE_ITEM_BACKDROP, x, y, scale, scale);
+            case 3 ->
+                    context.drawGuiTexture(VERY_RARE_ITEM_BACKDROP, x, y, scale, scale);
+            case 4 ->
+                    context.drawGuiTexture(LEGENDARY_ITEM_BACKDROP, x, y, scale, scale);
         }
         context.drawGuiTexture(item.getSettings().getTexture(), x + 8, y + 8, scale - 16, scale - 16);
         if (this.item.getSettings().getStackSize() == -1) {

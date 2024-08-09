@@ -2,12 +2,9 @@ package pl.epsi.horizonItems;
 
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import pl.epsi.player.inventory.CustomItem;
-import pl.epsi.player.inventory.CustomItemSettings;
-import pl.epsi.player.inventory.InventoryCategory;
-import pl.epsi.player.inventory.ResourcesSubCategory;
+import pl.epsi.player.inventory.*;
 
-public class BlazeItem extends CustomItem {
+public class BlazeItem extends ResourceItem {
 
     public BlazeItem() {
         super(CustomItemSettings.create()
@@ -17,7 +14,9 @@ public class BlazeItem extends CustomItem {
                 .setTexture(new Identifier("horizoninmc", "inventory/items/blaze_canister")),
                 //.setStackSize()
                 Text.translatable("customItem.horizoninmc.blaze"),
-                Text.translatable("customItem.horizoninmc.blaze.description"));
+                Text.translatable("customItem.horizoninmc.blaze.description"),
+                Text.translatable("customItem.horizoninmc.blaze.sources"),
+                Text.translatable("customItem.horizoninmc.blaze.uses"));
     }
 
 

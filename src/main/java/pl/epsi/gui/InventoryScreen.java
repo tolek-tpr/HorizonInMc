@@ -3,13 +3,11 @@ package pl.epsi.gui;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.gui.widget.ContainerWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
-import pl.epsi.gui.modules.InventorySlotModule;
-import pl.epsi.gui.modules.InventoryTypeSelectorModule;
-import pl.epsi.gui.modules.MenuSelectorModule;
-import pl.epsi.gui.modules.ScrollableListModule;
+import pl.epsi.gui.modules.*;
 import pl.epsi.player.inventory.CustomInventory;
 import pl.epsi.player.inventory.CustomItem;
 import pl.epsi.util.HorizonUtil;
@@ -17,6 +15,7 @@ import pl.epsi.util.InstancedValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InventoryScreen extends MainMenuScreenE {
 
@@ -27,6 +26,7 @@ public class InventoryScreen extends MainMenuScreenE {
     private InventorySlotModule selectedSlot;
     private ScrollableListModule slm;
     private InventoryTypeSelectorModule itsm;
+    private ContainerWidget itemDescriptionModule;
     private final Identifier ITEM_SELECTED = new Identifier("horizoninmc", "inventory/item_selected");
     private final Identifier ENTER_ICON = new Identifier("horizoninmc", "selection/enter");
     private final Identifier ESCAPE_ICON = new Identifier("horizoninmc", "selection/escape");
@@ -39,18 +39,22 @@ public class InventoryScreen extends MainMenuScreenE {
     @Override
     public void init() {
         InstancedValues.getInstance().inventoryEntrySelected = 0;
+        this.selectedSlot = null;
+        this.subCategoryEntered = false;
 
         MenuSelectorModule msm = new MenuSelectorModule(width, 20, menuSelected);
         addDrawableChild(msm);
         msm.children().forEach(this::addDrawableChild);
 
-        itsm = new InventoryTypeSelectorModule(30, 80, height, true);
+        itsm = new InventoryTypeSelectorModule(30, 57, height, true);
         addDrawableChild(itsm);
         itsm.children().forEach(this::addDrawableChild);
 
         slm = new ScrollableListModule(MinecraftClient.getInstance(), InventorySlotModule.scale * 4 + 40, InventorySlotModule.scale * 6, 80, 56);
         slm.setRenderBackground(false);
         slm.setX(200);
+
+        handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
     }
 
     @Override
@@ -89,9 +93,16 @@ public class InventoryScreen extends MainMenuScreenE {
                     slot.getY() + InventorySlotModule.scale });
             if (HorizonUtil.isCoordinateInsideSquare(slotPositions.get(slot), (int) mouseX, (int) mouseY)) {
                 if (this.selectedSlot == slot) {
+                    remove(itemDescriptionModule);
+                    this.itemDescriptionModule = null;
                     this.selectedSlot = null;
                 } else {
                     this.selectedSlot = slot;
+                    remove(itemDescriptionModule);
+                    this.itemDescriptionModule = HorizonUtil.getDescriptionWidgetForCategory(
+                            InstancedValues.getInstance().inventoryEntrySelected,
+                            100 + InventorySlotModule.scale * 4 + 60, 86, height - 80, slot.getItem());
+                    addDrawableChild(itemDescriptionModule);
                 }
             }
         });
@@ -103,15 +114,16 @@ public class InventoryScreen extends MainMenuScreenE {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_ENTER && !this.subCategoryEntered) {
-            redrawItsm(new InventoryTypeSelectorModule(30, 80, height, false));
+            redrawItsm(new InventoryTypeSelectorModule(30, 57, height, false));
             slm.setX(100);
             handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
             this.subCategoryEntered = true;
         }
         if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.subCategoryEntered) {
-            redrawItsm(new InventoryTypeSelectorModule(30, 80, height, true));
+            redrawItsm(new InventoryTypeSelectorModule(30, 57, height, true));
             slm.setX(200);
             handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
+            remove(itemDescriptionModule);
             this.subCategoryEntered = false;
             return true;
         }
@@ -138,20 +150,21 @@ public class InventoryScreen extends MainMenuScreenE {
         remove(slm);
         int slmXPrev = slm == null ? 200 : slm.getX();
 
-        slm = new ScrollableListModule(MinecraftClient.getInstance(), InventorySlotModule.scale * 4 + 40, InventorySlotModule.scale * 6, 80, 56);
+        slm = new ScrollableListModule(MinecraftClient.getInstance(), InventorySlotModule.scale * 4 + 40, height - 80, 80, 56);
         slm.setRenderBackground(false);
         slm.setX(slmXPrev);
 
         ScrollableListModule.ListEntry lastRow = null;
         int j = 0;
         HashMap<CustomItem, Integer> map = getMapForEntry(inventoryEntrySelected);
+        List<CustomItem> sortedItems = HorizonUtil.sortItemsByRarity(getMapForEntry(inventoryEntrySelected));
 
-        for (int i = 0; i < map.size(); ++i) {
+        for (int i = 0; i < sortedItems.size(); ++i) {
             if (i % 4 == 0)  {
                 lastRow = slm.addRow();
                 j = 0;
             } else { j++; }
-            CustomItem item = (CustomItem) map.keySet().toArray()[i];
+            CustomItem item = sortedItems.get(i);
             InventorySlotModule ism = new InventorySlotModule(slm.getX() + j * InventorySlotModule.scale + j * 10, 0, item, map.get(item));
 
             toRemove.add(slm);
