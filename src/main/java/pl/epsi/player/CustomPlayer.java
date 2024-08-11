@@ -7,7 +7,7 @@ public class CustomPlayer {
 
     private boolean visible;
     private final CustomInventory inventory = CustomInventory.getInstance();
-    private Quest quest;
+    private Quest currentQuest;
     private static CustomPlayer instance;
     private int dustAmount = 0;
 
@@ -32,11 +32,11 @@ public class CustomPlayer {
         return inventory;
     }
 
-    public void setQuest(Quest quest) {
-        this.quest = quest;
+    public void setCurrentQuest(Quest currentQuest) {
+        this.currentQuest = currentQuest;
     }
 
-    public Quest getQuest() {
-        return quest;
+    public Quest getCurrentQuest() {
+        return currentQuest;
     }
 }

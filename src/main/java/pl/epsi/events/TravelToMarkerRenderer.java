@@ -17,9 +17,8 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
 
     private final MinecraftClient client = MinecraftClient.getInstance();
     private final CustomPlayer player = CustomPlayer.getInstance();
-    private Quest selectedQuest = player.getQuest();
+    private Quest selectedQuest = player.getCurrentQuest();
     private QuestStep step;
-    private TravelToObjective objective;
 
     @Override
     public void onEnable() {
@@ -33,25 +32,22 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
 
     @Override
     public void onRender(DrawContext context, float tickDelta) {
-        this.selectedQuest = player.getQuest();
+        this.selectedQuest = player.getCurrentQuest();
         if (selectedQuest == null) return;
-        this.step = selectedQuest.getSteps().get(selectedQuest.currentStep);
+        this.step = selectedQuest.getCurrentStep();
         if (step == null) return;
-        if (step.getObjective() instanceof TravelToObjective) {
-            this.objective = (TravelToObjective) step.getObjective();
-        }
-        if (objective == null) return;
-
-        this.draw(context, tickDelta, objective);
+        if (step instanceof TravelStep)
+            this.draw(context, tickDelta, (TravelStep) step);
     }
 
     public double getFarPlaceViewDistance() {
         return client.gameRenderer.getViewDistance() * 4D;
     }
 
-    public void draw(DrawContext context, float tickDelta, TravelToObjective objective) {
+    public void draw(DrawContext context, float tickDelta, TravelStep objective) {
         Camera camera = client.gameRenderer.getCamera();
-        Vector3d position = new Vector3d(objective.x, objective.y, objective.z);
+        Vector3d point = objective.getCurrentPoint();
+        Vector3d position = new Vector3d(point.x, point.y, point.z);
         Matrix4d worldToScreenSpace = new Matrix4d();
         double fov = ((GameRendererInvoker) client.gameRenderer)
                 .horizon_getFov(camera, tickDelta, true);

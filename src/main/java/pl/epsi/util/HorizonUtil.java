@@ -1,6 +1,7 @@
 package pl.epsi.util;
 
 import net.minecraft.client.gui.widget.ContainerWidget;
+import org.joml.Vector3d;
 import pl.epsi.gui.modules.ResourceItemDescriptionModule;
 import pl.epsi.gui.modules.SpearItemDescriptionModule;
 import pl.epsi.player.inventory.*;
@@ -35,6 +36,23 @@ public class HorizonUtil {
         double distanceSquared = Math.pow(posX - center[0], 2) +
                 Math.pow(posY - center[1], 2) +
                 Math.pow(posZ - center[2], 2);
+
+        double radiusSquared = Math.pow(radius, 2);
+
+        return distanceSquared <= radiusSquared;
+    }
+
+    /**
+     *
+     * @param center A Vector3d containing the coordinates of the middle of the sphere
+     * @param pos A Vector3d of the position to check
+     * @param radius the radius of the sphere
+     * @return Boolean, is the position inside the sphere
+     */
+    public static boolean isCoordinateInSphere(Vector3d center, Vector3d pos, int radius) {
+        double distanceSquared = Math.pow(pos.x - center.x, 2) +
+                Math.pow(pos.y - center.y, 2) +
+                Math.pow(pos.z - center.z, 2);
 
         double radiusSquared = Math.pow(radius, 2);
 

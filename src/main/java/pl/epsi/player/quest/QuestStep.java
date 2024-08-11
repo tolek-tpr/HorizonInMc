@@ -2,37 +2,36 @@ package pl.epsi.player.quest;
 
 import net.minecraft.text.Text;
 
-public class QuestStep {
+public abstract class QuestStep {
 
-    private QuestObjective objective;
-    private boolean isCompleted;
-    private Quest parent;
+    private QuestStatus status = QuestStatus.STATUS_PENDING;
+    private boolean isMajor = false;
     private Text name;
     private Text description;
 
-    public QuestStep(Quest parent, Text name, Text description) {
+    public QuestStep(Text name, Text description) {
         this.name = name;
         this.description = description;
-        this.parent = parent;
     }
 
-    public Quest getQuest() {
-        return this.parent;
+    public QuestStatus getStatus() {
+        return this.status;
     }
 
-    public void setObjective(QuestObjective objective) {
-        this.objective = objective;
+    public void setStatus(QuestStatus status) {
+        this.status = status;
     }
 
-    public boolean isCompleted() {
-        return isCompleted;
+    public boolean isMajor() {
+        return isMajor;
     }
 
-    public void setCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
-        this.parent.update();
+    public void announceCompleted() {
+        System.out.println("STEP COMPLETED");
     }
 
-    public QuestObjective getObjective() { return this.objective; }
+    public void announceFailed() {
+        System.out.println("STEP FAILED");
+    }
 
 }
