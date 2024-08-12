@@ -47,7 +47,6 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
                 }
             }
             if (MinecraftClient.getInstance().currentScreen instanceof InventoryScreen) {
-
                 switch (keyCode) {
                     case GLFW.GLFW_KEY_W ->  {
                         if (isInventorySubGroupOpen()) return;
@@ -63,6 +62,24 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
                             iv.inventoryEntrySelected = 0;
                         } else {
                             iv.inventoryEntrySelected++;
+                        }
+                    }
+                }
+            }
+            if (MinecraftClient.getInstance().currentScreen instanceof QuestScreen) {
+                switch (keyCode) {
+                    case GLFW.GLFW_KEY_W ->  {
+                        if (iv.questEntrySelected == 0) {
+                            iv.questEntrySelected = 6;
+                        } else {
+                            iv.questEntrySelected--;
+                        }
+                    }
+                    case GLFW.GLFW_KEY_S -> {
+                        if (iv.questEntrySelected == 6) {
+                            iv.questEntrySelected = 0;
+                        } else {
+                            iv.questEntrySelected++;
                         }
                     }
                 }

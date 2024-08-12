@@ -36,6 +36,10 @@ public class CustomTextRenderer {
         }
     }
 
+    public void setTextMap(Identifier textMap) {
+        this.textMap = textMap;
+    }
+
     /**
      *
      * @param letter The letter you want to get info for
