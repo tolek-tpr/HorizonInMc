@@ -35,7 +35,7 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
     public void onKey(int keyCode, int scanCode, int modifiers) {
         if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
             if (keyCode == GLFW.GLFW_KEY_TAB && !(MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE)) {
-                iv.screen = new QuestScreen(2);
+                iv.screen = new MapScreen(2);
                 MinecraftClient.getInstance().setScreen(iv.screen);
             }
             if (MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE) {
