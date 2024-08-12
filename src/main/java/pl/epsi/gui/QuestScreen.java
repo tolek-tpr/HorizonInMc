@@ -32,7 +32,7 @@ public class QuestScreen extends MainMenuScreenE {
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_W || keyCode == GLFW.GLFW_KEY_S) {
             //if (this.subCategoryEntered) return super.keyPressed(keyCode, scanCode, modifiers);
-            handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
+            //handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }

@@ -70,13 +70,13 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
                 switch (keyCode) {
                     case GLFW.GLFW_KEY_W ->  {
                         if (iv.questEntrySelected == 0) {
-                            iv.questEntrySelected = 6;
+                            iv.questEntrySelected = 14;
                         } else {
                             iv.questEntrySelected--;
                         }
                     }
                     case GLFW.GLFW_KEY_S -> {
-                        if (iv.questEntrySelected == 6) {
+                        if (iv.questEntrySelected == 14) {
                             iv.questEntrySelected = 0;
                         } else {
                             iv.questEntrySelected++;
