@@ -59,112 +59,114 @@ public class QuestTypeSelectorModule extends ContainerWidget {
 
     private void renderEntries(DrawContext context) {
         CustomTextRenderer renderer = new CustomTextRenderer(context);
-        int j = this.getY() + 30;
+        int j = this.getY() + 25;
 
-        if (iv.questEntrySelected == 0) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("ACTIVE", x + 40, j, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("ACTIVE", x + 30, j, 1, 10);
-        }
-        if (iv.questEntrySelected == 1) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("MAIN", x + 40, j + 30, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("MAIN", x + 30, j + 30, 1, 10);
-        }
-        if (iv.questEntrySelected == 2) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("SIDE", x + 40, j + 55, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("SIDE", x + 30, j + 55, 1, 10);
-        }
-        if (iv.questEntrySelected == 3) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("ERRANDS", x + 40, j + 80, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("ERRANDS", x + 30, j + 80, 1, 10);
-        }
-        if (iv.questEntrySelected == 4) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("JOBS", x + 40, j + 105, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("JOBS", x + 30, j + 105, 1, 10);
-        }
-        if (iv.questEntrySelected == 5) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("SALVAGE CONTRACTS", x + 40, j + 130, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("SALVAGE CONTRACTS", x + 30, j + 130, 1, 10);
-        }
-        if (iv.questEntrySelected == 6) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("HUNTING GROUNDS", x + 40, j + 155, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("HUNTING GROUNDS", x + 30, j + 155, 1, 10);
-        }
-        if (iv.questEntrySelected == 7) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("MELEE PIT", x + 40, j + 180, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("MELEE PIT", x + 30, j + 180, 1, 10);
-        }
-        if (iv.questEntrySelected == 8) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("THE ARENA", x + 40, j + 205, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("THE ARENA", x + 30, j + 205, 1, 10);
-        }
-        if (iv.questEntrySelected == 9) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("REBEL CAMPS", x + 40, j + 230, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("REBEL CAMPS", x + 30, j + 230, 1, 10);
-        }
-        if (iv.questEntrySelected == 10) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("REBEL OUTPOSTS", x + 40, j + 255, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("REBEL OUTPOSTS", x + 30, j + 255, 1, 10);
-        }
-        if (iv.questEntrySelected == 11) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("RELIC RUINS", x + 40, j + 280, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("RELIC RUINS", x + 30, j + 280, 1, 10);
-        }
-        if (iv.questEntrySelected == 12) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("TALLNECKS", x + 40, j + 305, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("TALLNECKS", x + 30, j + 305, 1, 10);
-        }
-        if (iv.questEntrySelected == 13) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("CAULDRONS", x + 40, j + 330, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("CAULDRONS", x + 30, j + 330, 1, 10);
-        }
-        if (iv.questEntrySelected == 14) {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
-            renderer.renderText("COLLECTABLES", x + 40, j + 355, 1, 10);
-        } else {
-            renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
-            renderer.renderText("COLLECTABLES", x + 30, j + 355, 1, 10);
+        if (this.drawNames) {
+            if (iv.questEntrySelected == 0) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("ACTIVE", x + 40, j, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("ACTIVE", x + 30, j, 1, 10);
+            }
+            if (iv.questEntrySelected == 1) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("MAIN", x + 40, j + 30, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("MAIN", x + 30, j + 30, 1, 10);
+            }
+            if (iv.questEntrySelected == 2) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("SIDE", x + 40, j + 55, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("SIDE", x + 30, j + 55, 1, 10);
+            }
+            if (iv.questEntrySelected == 3) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("ERRANDS", x + 40, j + 80, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("ERRANDS", x + 30, j + 80, 1, 10);
+            }
+            if (iv.questEntrySelected == 4) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("JOBS", x + 40, j + 105, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("JOBS", x + 30, j + 105, 1, 10);
+            }
+            if (iv.questEntrySelected == 5) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("SALVAGE CONTRACTS", x + 40, j + 130, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("SALVAGE CONTRACTS", x + 30, j + 130, 1, 10);
+            }
+            if (iv.questEntrySelected == 6) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("HUNTING GROUNDS", x + 40, j + 155, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("HUNTING GROUNDS", x + 30, j + 155, 1, 10);
+            }
+            if (iv.questEntrySelected == 7) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("MELEE PIT", x + 40, j + 180, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("MELEE PIT", x + 30, j + 180, 1, 10);
+            }
+            if (iv.questEntrySelected == 8) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("THE ARENA", x + 40, j + 205, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("THE ARENA", x + 30, j + 205, 1, 10);
+            }
+            if (iv.questEntrySelected == 9) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("REBEL CAMPS", x + 40, j + 230, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("REBEL CAMPS", x + 30, j + 230, 1, 10);
+            }
+            if (iv.questEntrySelected == 10) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("REBEL OUTPOSTS", x + 40, j + 255, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("REBEL OUTPOSTS", x + 30, j + 255, 1, 10);
+            }
+            if (iv.questEntrySelected == 11) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("RELIC RUINS", x + 40, j + 280, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("RELIC RUINS", x + 30, j + 280, 1, 10);
+            }
+            if (iv.questEntrySelected == 12) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("TALLNECKS", x + 40, j + 305, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("TALLNECKS", x + 30, j + 305, 1, 10);
+            }
+            if (iv.questEntrySelected == 13) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("CAULDRONS", x + 40, j + 330, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("CAULDRONS", x + 30, j + 330, 1, 10);
+            }
+            if (iv.questEntrySelected == 14) {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_gold.png"));
+                renderer.renderText("COLLECTABLES", x + 40, j + 355, 1, 10);
+            } else {
+                renderer.setTextMap(new Identifier("horizoninmc", "font/custom_font_1.png"));
+                renderer.renderText("COLLECTABLES", x + 30, j + 355, 1, 10);
+            }
         }
     }
 
