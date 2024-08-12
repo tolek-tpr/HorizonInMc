@@ -23,11 +23,11 @@ public class CustomTextRenderer {
         for (String letter : letters) {
             int[] texturePosition = getPositionInfo(letter);
 
-            if (texturePosition == null) continue;
             if (letter.equals(" ")) {
                 step += 5;
                 continue;
             }
+            if (texturePosition == null) continue;
 
             context.drawTexture(textMap, x + step, y, texturePosition[2], height,
                     texturePosition[0], texturePosition[1], texturePosition[2],
