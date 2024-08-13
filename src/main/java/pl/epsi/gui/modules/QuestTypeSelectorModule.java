@@ -56,7 +56,7 @@ public class QuestTypeSelectorModule extends ContainerWidget {
     }
 
     private void renderEntries(DrawContext context) {
-        CustomTextRenderer renderer = CustomTextRenderer.of("horizoninmc", "font/tpr_chunky_16.png");
+        CustomTextRenderer renderer = CustomTextRenderer.of("horizoninmc", "font/tpr_chunky_16");
         int j = this.getY() + 25;
 
         if (this.drawNames) {

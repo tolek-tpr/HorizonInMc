@@ -6,7 +6,6 @@ import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,14 +14,14 @@ import java.util.TreeMap;
 public class CustomTextRenderer {
 
     public static class FontProps {
-        private String name;
-        private int bitmapHeight = 16;
-        private int bitmapWidth = 232;
-        private int baseLine = 10;
-        private int baseHeight = 10;
-        private int fallbackWidth = 16;
-        private int fallbackHeight = 10;
-        private final Map<Character, ArrayList<Integer>> characters = new TreeMap<>();
+        public String name;
+        public int bitmapHeight = 16;
+        public int bitmapWidth = 232;
+        public int baseLine = 10;
+        public int baseHeight = 16;
+        public int fallbackWidth = 10;
+        public int fallbackHeight = 16;
+        public final Map<Character, ArrayList<Integer>> characters = new TreeMap<>();
     }
 
     private final static Map<Identifier, CustomTextRenderer> renderers = new TreeMap<>();
@@ -38,24 +37,6 @@ public class CustomTextRenderer {
 
     public enum VerticalAlign { TOP, BOTTOM, CENTER }
     private VerticalAlign verticalAlign = VerticalAlign.TOP;
-
-    public class ItemToRender {
-        public final int x;
-        public final int y;
-        public final int width;
-        public final int height;
-        public final int posX;
-        public final int posY;
-
-        public ItemToRender(int x, int y, int width, int height, int posX, int posY) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.posX = posX;
-            this.posY = posY;
-        }
-    }
 
     public class Cursor {
         public final int x;
@@ -76,13 +57,18 @@ public class CustomTextRenderer {
 
     public static CustomTextRenderer of(String modId, String fontName) {
         Identifier font = new Identifier(modId, fontName + ".png");
+
         if (!renderers.containsKey(font)) {
             Yaml yaml = new Yaml(new Constructor(FontProps.class, new LoaderOptions()));
             try {
-                FontProps props = yaml.load(new FileInputStream(fontName + ".yml"));
+                FontProps props = yaml.load(new FileInputStream("/Users/Tolek/Documents/Projects/HorizonInMc-1.20.4/src/main/resources/assets/horizoninmc/font/tpr_chunky_16.yml"));
+                props.characters.forEach((k, v) -> {
+                    if (v.size() < 3) props.characters.get(k).add(props.fallbackWidth);
+                    if (v.size() < 4) props.characters.get(k).add(props.fallbackHeight);
+                });
                 renderers.put(font, new CustomTextRenderer(font, props));
             } catch (Exception e) {
-                System.err.println("Font file '" + fontName ".yml' not found");
+                e.printStackTrace();
             }
         }
         return renderers.get(font);
@@ -117,8 +103,8 @@ public class CustomTextRenderer {
         ArrayList<Integer> position = props.characters.get(ch);
         int posX = position.get(0);
         int posY = position.get(1);
-        int w = position.get(2) == null ? props.fallbackWidth : position.get(2);
-        int h = position.get(3) == null ? props.fallbackHeight : position.get(3);
+        int w = position.get(2);
+        int h = position.get(3);
         context.drawTexture(font, cursor.x, cursor.y, w, h,
                 posX, posY, w,
                 h, props.bitmapWidth, props.bitmapHeight);
