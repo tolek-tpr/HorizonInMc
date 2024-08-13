@@ -9,10 +9,14 @@ import java.util.Arrays;
 public class CustomTextRenderer {
 
     private DrawContext context;
-    private Identifier textMap = new Identifier("horizoninmc", "font/custom_font_1.png");
+    private Identifier textMap = new Identifier("horizoninmc", "font/custom_font.png");
 
     public CustomTextRenderer(DrawContext context) {
         this.context = context;
+    }
+
+    public void setColor() {
+        
     }
 
     public void renderText(String stringText, int x, int y, int spacing, int height) {
