@@ -1,7 +1,8 @@
 name: "TPR Chunky 16"
 bitmapHeight: 16
 bitmapWidth: 232
-baseLine: 14
+baseLine: 10
+baseHeight: 16
 fallbackWidth: 8
 fallbackHeight: 10
 characters:
