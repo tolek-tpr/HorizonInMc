@@ -1,81 +1,102 @@
 package pl.epsi.render;
 
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import org.yaml.snakeyaml.Yaml;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class CustomTextRenderer {
 
-    private DrawContext context;
-    private Identifier textMap = new Identifier("horizoninmc", "font/custom_font_1.png");
-
-    public CustomTextRenderer(DrawContext context) {
-        this.context = context;
-    }
-
-    public void renderText(String stringText, int x, int y, int spacing, int height) {
-        stringText = stringText.toLowerCase();
-        String[] letters = stringText.split("");
-        int step = 0;
-
-        for (String letter : letters) {
-            int[] texturePosition = getPositionInfo(letter);
-
-            if (letter.equals(" ")) {
-                step += 5;
-                continue;
-            }
-            if (texturePosition == null) continue;
-
-            context.drawTexture(textMap, x + step, y, texturePosition[2], height,
-                    texturePosition[0], texturePosition[1], texturePosition[2],
-                    16, 232, 16);
-            step += texturePosition[2] + spacing;
+    public static class CustomTextRendererException extends Exception {
+        CustomTextRendererException(String msg) {
+            super(msg);
         }
     }
 
-    public void setTextMap(Identifier textMap) {
-        this.textMap = textMap;
+    public static class FontProps {
+        private String name;
+        private int bitmapHeight = 16;
+        private int bitmapWidth = 232;
+        private int baseLine = 12;
+        private int fallbackWidth = 16;
+        private int fallbackHeight = 10;
+        private final Map<Character, ArrayList<Integer>> characters = new TreeMap<>();
     }
 
-    /**
-     *
-     * @param letter The letter you want to get info for
-     * @return Integer[], The U, V, and regionWidth for a given letter
-     */
-    public int[] getPositionInfo(String letter) {
-        switch(letter) {
-            case "a" -> { return new int[]{ 0, 0, 8 }; }
-            case "b" -> { return new int[]{ 10, 0, 8 }; }
-            case "c" -> { return new int[]{ 18, 0, 8 }; }
-            case "d" -> { return new int[]{ 27, 0, 8 }; }
-            case "e" -> { return new int[]{ 36, 0, 7 }; }
-            case "f" -> { return new int[]{ 44, 0, 8 }; }
-            case "g" -> { return new int[]{ 52, 0, 8 }; }
-            case "h" -> { return new int[]{ 61, 0, 8 }; }
-            case "i" -> { return new int[]{ 70, 0, 6 }; }
-            case "j" -> { return new int[]{ 77, 0, 8 }; }
-            case "k" -> { return new int[]{ 86, 0, 7 }; }
-            case "l" -> { return new int[]{ 94, 0, 8 }; }
-            case "m" -> { return new int[]{ 103, 0, 9 }; }
-            case "n" -> { return new int[]{ 113, 0, 8 }; }
-            case "o" -> { return new int[]{ 122, 0, 8 }; }
-            case "p" -> { return new int[]{ 131, 0, 8 }; }
-            case "q" -> { return new int[]{ 140, 0, 8 }; }
-            case "r" -> { return new int[]{ 149, 0, 7 }; }
-            case "s" -> { return new int[]{ 157, 0, 8 }; }
-            case "t" -> { return new int[]{ 166, 0, 8 }; }
-            case "u" -> { return new int[]{ 175, 0, 8 }; }
-            case "w" -> { return new int[]{ 184, 0, 10 }; }
-            case "v" -> { return new int[]{ 195, 0, 9 }; }
-            case "x" -> { return new int[]{ 205, 0, 9 }; }
-            case "y" -> { return new int[]{ 215, 0, 8 }; }
-            case "z" -> { return new int[]{ 224, 0, 8 }; }
-        }
+    private final static Map<Identifier, CustomTextRenderer> renderers = new TreeMap<>();
 
-        return null;
+    final private Identifier font;
+    final private FontProps props;
+
+    private int horizontalSpacing = 1;
+    private int verticalSpacing = 1;
+    private int scaling = 1;
+
+    public enum HorizontalAlign { LEFT, RIGHT, CENTER }
+    private HorizontalAlign horizontalAlign = HorizontalAlign.LEFT;
+
+    public enum VerticalAlign { TOP, BOTTOM, CENTER }
+    private VerticalAlign verticalAlign = VerticalAlign.TOP;
+
+    private CustomTextRenderer(Identifier font, FontProps props) {
+        this.font = font;
+        this.props = props;
+    }
+
+    public static CustomTextRenderer of(String modId, String fontName) {
+        Identifier font = new Identifier(modId, fontName + ".png");
+//        if (!renderers.containsKey(font)) {
+            Yaml yaml = new Yaml();
+            final FontProps props = (FontProps) yaml.load(fontName + ".yml");
+//            renderers.put(font, new CustomTextRenderer(font, props));
+//        }
+//        return renderers.get(font);
+    return new CustomTextRenderer(font, props);
+    }
+
+    public CustomTextRenderer setHorizontalSpacing(int horizontalSpacing) {
+        this.horizontalSpacing = horizontalSpacing;
+        return this;
+    }
+
+    public CustomTextRenderer setVerticalSpacing(int verticalSpacing) {
+        this.verticalSpacing = verticalSpacing;
+        return this;
+    }
+
+    public CustomTextRenderer setScaling(int scaling) {
+        this.scaling = scaling;
+        return this;
+    }
+
+    public CustomTextRenderer setHorizontalAlign(HorizontalAlign horizontalAlign) {
+        this.horizontalAlign = horizontalAlign;
+        return this;
+    }
+
+    public CustomTextRenderer setVerticalAlign(VerticalAlign verticalAlign) {
+        this.verticalAlign = verticalAlign;
+        return this;
+    }
+    public int renderLine(DrawContext context, String text, int x, int y) throws CustomTextRendererException {
+        int offset = 0;
+        for (int i = 0; i < text.length(); ++i) {
+            final char ch = text.charAt(i);
+            if (!props.characters.containsKey(ch)) throw new CustomTextRendererException("Character '" + ch + "' not found in font map");
+            final ArrayList<Integer> position = props.characters.get(ch);
+            final int posX = position.get(0);
+            final int posY = position.get(1);
+            final int width = position.get(2) == null ? props.fallbackWidth : position.get(2);
+            final int height = position.get(3) == null ? props.fallbackHeight : position.get(3);
+            context.drawTexture(font, x + offset, y, width, height,
+                    posX, posY, width,
+                    height, props.bitmapWidth, props.bitmapHeight);
+            offset += Math.ceil((width + horizontalSpacing) * scaling);
+        }
+        return offset;
     }
 
 }
