@@ -1,5 +1,6 @@
 package pl.epsi.render;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.Identifier;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -7,8 +8,10 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import java.io.FileInputStream;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 public class CustomTextRenderer {
@@ -21,6 +24,7 @@ public class CustomTextRenderer {
         public int baseHeight = 16;
         public int fallbackWidth = 10;
         public int fallbackHeight = 16;
+        public int spaceWidth = 5;
         public final Map<Character, ArrayList<Integer>> characters = new TreeMap<>();
     }
 
@@ -31,6 +35,7 @@ public class CustomTextRenderer {
 
     private int horizontalSpacing = 1;
     private int verticalSpacing = 1;
+    private Integer textHeight = null;
 
     public enum HorizontalAlign { LEFT, RIGHT, CENTER }
     private HorizontalAlign horizontalAlign = HorizontalAlign.LEFT;
@@ -55,18 +60,22 @@ public class CustomTextRenderer {
         this.props = props;
     }
 
-    public static CustomTextRenderer of(String modId, String fontName) {
-        Identifier font = new Identifier(modId, fontName + ".png");
+    public static CustomTextRenderer of(String modId, String fontPath) {
+        Identifier font = new Identifier(modId, fontPath + ".png");
 
         if (!renderers.containsKey(font)) {
             Yaml yaml = new Yaml(new Constructor(FontProps.class, new LoaderOptions()));
             try {
-                FontProps props = yaml.load(new FileInputStream("/Users/Tolek/Documents/Projects/HorizonInMc-1.20.4/src/main/resources/assets/horizoninmc/font/tpr_chunky_16.yml"));
-                props.characters.forEach((k, v) -> {
-                    if (v.size() < 3) props.characters.get(k).add(props.fallbackWidth);
-                    if (v.size() < 4) props.characters.get(k).add(props.fallbackHeight);
-                });
-                renderers.put(font, new CustomTextRenderer(font, props));
+                Optional<Path> o = FabricLoader.getInstance().getModContainer(modId).get()
+                        .findPath("assets/" + modId + "/" + fontPath + ".yml");
+                if (o.isPresent()) {
+                    FontProps props = yaml.load(new FileInputStream(o.get().toFile()));
+                    props.characters.forEach((k, v) -> {
+                        if (v.size() < 3) props.characters.get(k).add(props.fallbackWidth);
+                        if (v.size() < 4) props.characters.get(k).add(props.fallbackHeight);
+                    });
+                    renderers.put(font, new CustomTextRenderer(font, props));
+                } else { throw new Exception("Could not find " + fontPath + ".yml"); }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,6 +98,11 @@ public class CustomTextRenderer {
         return this;
     }
 
+    public CustomTextRenderer setTextHeight(int height) {
+        this.textHeight = height;
+        return this;
+    }
+
     public CustomTextRenderer setVerticalAlign(VerticalAlign verticalAlign) {
         this.verticalAlign = verticalAlign;
         return this;
@@ -99,13 +113,15 @@ public class CustomTextRenderer {
     }
 
     public Cursor renderChar(DrawContext context, char ch, Cursor cursor) {
+        if (ch == ' ') return new Cursor(cursor.x + props.spaceWidth, cursor.y, cursor.count + 1);
         if (!props.characters.containsKey(ch)) return cursor;
         ArrayList<Integer> position = props.characters.get(ch);
         int posX = position.get(0);
         int posY = position.get(1);
         int w = position.get(2);
         int h = position.get(3);
-        context.drawTexture(font, cursor.x, cursor.y, w, h,
+        int th = textHeight == null ? position.get(3) : textHeight;
+        context.drawTexture(font, cursor.x, cursor.y, w, th,
                 posX, posY, w,
                 h, props.bitmapWidth, props.bitmapHeight);
         return new Cursor(cursor.x + w + horizontalSpacing, cursor.y, cursor.count + 1);

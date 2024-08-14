@@ -57,6 +57,7 @@ public class QuestTypeSelectorModule extends ContainerWidget {
 
     private void renderEntries(DrawContext context) {
         CustomTextRenderer renderer = CustomTextRenderer.of("horizoninmc", "font/tpr_chunky_16");
+        renderer.setTextHeight(10);
         int j = this.getY() + 25;
 
         if (this.drawNames) {
@@ -65,6 +66,7 @@ public class QuestTypeSelectorModule extends ContainerWidget {
             } else {
                 renderer.renderLine(context, "ACTIVE", x + 30, j);
             }
+            j -= 5;
             if (iv.questEntrySelected == 1) {
                 renderer.renderLine(context, "MAIN", x + 40, j + 30);
             } else {

@@ -5,6 +5,7 @@ baseLine: 10
 baseHeight: 16
 fallbackWidth: 8
 fallbackHeight: 16
+spaceWidth: 5
 characters:
   A: [0, 0, 8]
   B: [10, 0, 8 ]
