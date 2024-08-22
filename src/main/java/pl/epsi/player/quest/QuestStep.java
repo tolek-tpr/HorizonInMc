@@ -14,6 +14,14 @@ public abstract class QuestStep {
         this.description = description;
     }
 
+    public Text getName() {
+        return name;
+    }
+
+    public Text getDescription() {
+        return description;
+    }
+
     public QuestStatus getStatus() {
         return this.status;
     }

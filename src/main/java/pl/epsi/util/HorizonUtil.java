@@ -5,6 +5,7 @@ import org.joml.Vector3d;
 import pl.epsi.gui.modules.ResourceItemDescriptionModule;
 import pl.epsi.gui.modules.SpearItemDescriptionModule;
 import pl.epsi.player.inventory.*;
+import pl.epsi.player.quest.QuestCategory;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -114,6 +115,51 @@ public class HorizonUtil {
             case WIRECASTER -> { return "Wirecaster"; }
         }
         return "";
+    }
+
+    public static String getQuestCategoryName(QuestCategory category) {
+        switch (category) {
+            case MAIN -> { return "Main Quest"; }
+            case SIDE -> { return "Side Quest"; }
+            case ERRANDS -> { return "Errand"; }
+            case JOBS -> { return "Job"; }
+            case SALVAGE_CONTRACTS -> { return "Salvage Contract"; }
+            case HUNTING_GROUNDS -> { return "Hunting Ground"; }
+            case MELEE_PIT -> { return "Melee Pit"; }
+            case THE_ARENA -> { return "The Arena"; }
+            case REBEL_CAMPS -> { return "Rebel Camp"; }
+            case REBEL_OUTPOSTS -> { return "Rebel Outpost"; }
+            case RELIC_RUINS -> { return "Relic Ruin"; }
+            case TALLNECKS -> { return "Tallneck"; }
+            case CAULDRONS -> { return "Cauldron"; }
+            case COLLECTABLES -> { return "Collectable"; }
+        }
+        return "";
+    }
+
+    /**
+     *
+     * @param selectedEntry The entry
+     * @return QuestCategory, the category from the entry
+     */
+    public static QuestCategory getQuestCategoryById(int selectedEntry) {
+        switch(selectedEntry) {
+            case 1 -> { return QuestCategory.MAIN; }
+            case 2 -> { return QuestCategory.SIDE; }
+            case 3 -> { return QuestCategory.ERRANDS; }
+            case 4 -> { return QuestCategory.JOBS; }
+            case 5 -> { return QuestCategory.SALVAGE_CONTRACTS; }
+            case 6 -> { return QuestCategory.HUNTING_GROUNDS; }
+            case 7 -> { return QuestCategory.MELEE_PIT; }
+            case 8 -> { return QuestCategory.THE_ARENA; }
+            case 9 -> { return QuestCategory.REBEL_CAMPS; }
+            case 10 -> { return QuestCategory.REBEL_OUTPOSTS; }
+            case 11 -> { return QuestCategory.RELIC_RUINS; }
+            case 12 -> { return QuestCategory.TALLNECKS; }
+            case 13 -> { return QuestCategory.CAULDRONS; }
+            case 14 -> { return QuestCategory.COLLECTABLES; }
+        }
+        return QuestCategory.MAIN;
     }
 
     /**

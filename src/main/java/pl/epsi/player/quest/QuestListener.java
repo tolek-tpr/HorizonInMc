@@ -30,6 +30,7 @@ public class QuestListener extends EventImpl implements UpdateListener {
 
     @Override
     public void onUpdate() {
+        if (player.getCurrentQuest() == null || player.getCurrentQuest().getCurrentStep() == null) return;
         QuestStep step = player.getCurrentQuest().getCurrentStep();
         if (!(step instanceof TravelStep)) return;
         ((TravelStep) step).onUpdate();

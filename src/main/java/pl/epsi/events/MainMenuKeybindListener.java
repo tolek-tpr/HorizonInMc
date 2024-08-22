@@ -33,71 +33,30 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
 
     @Override
     public void onKey(int keyCode, int scanCode, int modifiers) {
+        handleHorizonScreens(keyCode);
+    }
+
+    private void handleHorizonScreens(int keyCode) {
         if (InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), keyCode)) {
             if (keyCode == GLFW.GLFW_KEY_TAB && !(MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE)) {
                 iv.screen = new MapScreen(2);
                 MinecraftClient.getInstance().setScreen(iv.screen);
             }
-            if (MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE) {
+            if (MinecraftClient.getInstance().currentScreen instanceof MainMenuScreenE screen) {
+                screen.handleSubGroupChange(keyCode);
                 switch (keyCode) {
                     case GLFW.GLFW_KEY_Q ->
-                        handleScreenChangeLeft();
+                            handleScreenChangeLeft(screen);
                     case GLFW.GLFW_KEY_E ->
-                        handleScreenChangeRight();
+                            handleScreenChangeRight(screen);
                 }
             }
-            if (MinecraftClient.getInstance().currentScreen instanceof InventoryScreen) {
-                switch (keyCode) {
-                    case GLFW.GLFW_KEY_W ->  {
-                        if (isInventorySubGroupOpen()) return;
-                        if (iv.inventoryEntrySelected == 0) {
-                            iv.inventoryEntrySelected = 6;
-                        } else {
-                            iv.inventoryEntrySelected--;
-                        }
-                    }
-                    case GLFW.GLFW_KEY_S -> {
-                        if (isInventorySubGroupOpen()) return;
-                        if (iv.inventoryEntrySelected == 6) {
-                            iv.inventoryEntrySelected = 0;
-                        } else {
-                            iv.inventoryEntrySelected++;
-                        }
-                    }
-                }
-            }
-            if (MinecraftClient.getInstance().currentScreen instanceof QuestScreen) {
-                switch (keyCode) {
-                    case GLFW.GLFW_KEY_W ->  {
-                        if (iv.questEntrySelected == 0) {
-                            iv.questEntrySelected = 14;
-                        } else {
-                            iv.questEntrySelected--;
-                        }
-                    }
-                    case GLFW.GLFW_KEY_S -> {
-                        if (iv.questEntrySelected == 14) {
-                            iv.questEntrySelected = 0;
-                        } else {
-                            iv.questEntrySelected++;
-                        }
-                    }
-                }
-            }
+
         }
     }
 
-    private boolean isInventorySubGroupOpen() {
-        if (MinecraftClient.getInstance().currentScreen instanceof InventoryScreen) {
-            InventoryScreen screen = (InventoryScreen) MinecraftClient.getInstance().currentScreen;
-            return screen.subCategoryEntered;
-        } else {
-            return false;
-        }
-    }
-
-    private void handleScreenChangeLeft() {
-        if (isInventorySubGroupOpen()) return;
+    private void handleScreenChangeLeft(MainMenuScreenE screen) {
+        if (screen.isSubGroupEntered()) return;
         switch (iv.screen.getMenuSelected()) {
             case 0 -> iv.screen = new NotebookScreen(4);
             case 1 -> iv.screen = new InventoryScreen(0);
@@ -108,8 +67,8 @@ public class MainMenuKeybindListener extends EventImpl implements KeyboardListen
         this.updateScreen();
     }
 
-    private void handleScreenChangeRight() {
-        if (isInventorySubGroupOpen()) return;
+    private void handleScreenChangeRight(MainMenuScreenE screen) {
+        if (screen.isSubGroupEntered()) return;
         switch (iv.screen.getMenuSelected()) {
             case 0 -> iv.screen = new SkillsScreen(1);
             case 1 -> iv.screen = new MapScreen(2);

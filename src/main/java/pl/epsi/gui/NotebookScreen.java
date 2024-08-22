@@ -24,6 +24,14 @@ public class NotebookScreen extends MainMenuScreenE {
         client.setScreen(null);
     }
 
+    @Override
+    public void handleSubGroupChange(int keyCode) {
+
+    }
+
+    @Override
+    public boolean isSubGroupEntered() { return false; }
+
     public int getMenuSelected() { return this.menuSelected; }
 
 }

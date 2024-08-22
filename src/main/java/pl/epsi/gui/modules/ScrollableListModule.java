@@ -18,14 +18,19 @@ public class ScrollableListModule extends ElementListWidget<ScrollableListModule
         super(minecraftClient, width, height, y, itemHeight);
     }
 
+    private int scrollbarXPos = width - 40;
+
     public ListEntry addRow(ClickableWidget... widget) {
         ListEntry e = new ListEntry(widget);
         addEntry(e);
         return e;
     }
 
+    public void setScrollbarPosition(int scrollbarXPos) { this.scrollbarXPos = scrollbarXPos; }
+    public int getScrollbarPosition() { return this.scrollbarXPos; }
+
     protected int getScrollbarPositionX() {
-        return width - 40;
+        return this.scrollbarXPos;
     }
 
     public class ListEntry extends Entry<ListEntry> {

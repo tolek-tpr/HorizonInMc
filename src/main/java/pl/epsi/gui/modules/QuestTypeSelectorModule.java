@@ -28,7 +28,7 @@ public class QuestTypeSelectorModule extends ContainerWidget {
 
     private final Identifier SELECT_UP = new Identifier("horizoninmc", "selection/select_up");
     private final Identifier SELECT_DOWN = new Identifier("horizoninmc", "selection/select_down");
-    private final Identifier WEAPONS_TEXT = new Identifier("horizoninmc", "inventory/weapons_text");
+    private final Identifier CAULDRON_LOGO = new Identifier("horizoninmc", "quests/cauldron_logo");
 
     public ArrayList<ClickableWidget> getChildren() {
         return children;
@@ -60,6 +60,8 @@ public class QuestTypeSelectorModule extends ContainerWidget {
     private void renderEntries(DrawContext context) {
         CustomTextRenderer renderer = new CustomTextRenderer(context);
         int j = this.getY() + 25;
+
+        context.drawGuiTexture(CAULDRON_LOGO, x + 10, j + 325, 16, 16);
 
         if (this.drawNames) {
             if (iv.questEntrySelected == 0) {

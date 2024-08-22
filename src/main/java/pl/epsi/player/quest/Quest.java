@@ -2,11 +2,13 @@ package pl.epsi.player.quest;
 
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Quest {
     public List<QuestStep> steps = new LinkedList<>();
+    public List<Reward> rewards = new ArrayList<>();
     private QuestStatus status;
     private Integer currentStep = 0;
     private int minLevel;
@@ -19,9 +21,12 @@ public class Quest {
         this.description = description;
         this.minLevel = minLevel;
         this.category = category;
+
+        QuestManager.getInstance().addQuestToCategory(category, this);
     }
 
     public QuestStep getCurrentStep() {
+        if (steps == null || steps.isEmpty()) return null;
         return steps.get(currentStep);
     }
 

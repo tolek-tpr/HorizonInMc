@@ -38,6 +38,10 @@ public class CustomInventory {
         this.addItem(s2, 10);
         this.addItem(s3, 10);
 
+        for (int i = 0; i < 50; i++) {
+            this.addItem(new ChillwaterItem(), 1);
+        }
+
     }
 
     public static CustomInventory getInstance() {

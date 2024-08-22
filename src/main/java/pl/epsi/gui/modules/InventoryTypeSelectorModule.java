@@ -54,7 +54,7 @@ public class InventoryTypeSelectorModule extends ContainerWidget {
         context.drawGuiTexture(SELECT_DOWN, this.width / 2 - 10, j + 210, 20, 20);
 
         RenderSystem.enableBlend();
-        context.drawGuiTexture(WEAPONS_ICON, x + 15, j + 30, 16, 16);
+        context.drawGuiTexture(WEAPONS_ICON, x + 10, j + 30, 16, 16);
         RenderSystem.disableBlend();
 
         if (drawNames) {

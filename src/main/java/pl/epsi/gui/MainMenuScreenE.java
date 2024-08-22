@@ -8,5 +8,10 @@ public abstract class MainMenuScreenE extends Screen {
     protected MainMenuScreenE(Text title) {
         super(title);
     }
+
     public abstract int getMenuSelected();
+
+    public abstract void handleSubGroupChange(int keyCode);
+
+    public abstract boolean isSubGroupEntered();
 }

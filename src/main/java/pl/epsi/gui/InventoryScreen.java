@@ -24,6 +24,7 @@ public class InventoryScreen extends MainMenuScreenE {
     private ArrayList<ClickableWidget> toRemove = new ArrayList<>();
     private HashMap<InventorySlotModule, int[]> slotPositions = new HashMap<>();
     private InventorySlotModule selectedSlot;
+    private InstancedValues iv = InstancedValues.getInstance();
     private ScrollableListModule slm;
     private InventoryTypeSelectorModule itsm;
     private ContainerWidget itemDescriptionModule;
@@ -38,7 +39,7 @@ public class InventoryScreen extends MainMenuScreenE {
 
     @Override
     public void init() {
-        InstancedValues.getInstance().inventoryEntrySelected = 0;
+        iv.inventoryEntrySelected = 0;
         this.selectedSlot = null;
         this.subCategoryEntered = false;
 
@@ -53,8 +54,9 @@ public class InventoryScreen extends MainMenuScreenE {
         slm = new ScrollableListModule(MinecraftClient.getInstance(), InventorySlotModule.scale * 4 + 40, InventorySlotModule.scale * 6, 80, 56);
         slm.setRenderBackground(false);
         slm.setX(200);
+        slm.setScrollbarPosition(slm.getX() + InventorySlotModule.scale * 4 + 50);
 
-        handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
+        handleInventoryRender(iv.inventoryEntrySelected);
     }
 
     @Override
@@ -100,7 +102,7 @@ public class InventoryScreen extends MainMenuScreenE {
                     this.selectedSlot = slot;
                     remove(itemDescriptionModule);
                     this.itemDescriptionModule = HorizonUtil.getDescriptionWidgetForCategory(
-                            InstancedValues.getInstance().inventoryEntrySelected,
+                            iv.inventoryEntrySelected,
                             100 + InventorySlotModule.scale * 4 + 60, 86, height - 80, slot.getItem());
                     addDrawableChild(itemDescriptionModule);
                 }
@@ -116,20 +118,22 @@ public class InventoryScreen extends MainMenuScreenE {
         if (keyCode == GLFW.GLFW_KEY_ENTER && !this.subCategoryEntered) {
             redrawItsm(new InventoryTypeSelectorModule(30, 57, height, false));
             slm.setX(100);
-            handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
+            slm.setScrollbarPosition(slm.getX() + InventorySlotModule.scale * 4 + 50);
+            handleInventoryRender(iv.inventoryEntrySelected);
             this.subCategoryEntered = true;
         }
         if (keyCode == GLFW.GLFW_KEY_ESCAPE && this.subCategoryEntered) {
             redrawItsm(new InventoryTypeSelectorModule(30, 57, height, true));
             slm.setX(200);
-            handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
+            slm.setScrollbarPosition(slm.getX() + InventorySlotModule.scale * 4 + 50);
+            handleInventoryRender(iv.inventoryEntrySelected);
             remove(itemDescriptionModule);
             this.subCategoryEntered = false;
             return true;
         }
         if (keyCode == GLFW.GLFW_KEY_W || keyCode == GLFW.GLFW_KEY_S) {
             if (this.subCategoryEntered) return super.keyPressed(keyCode, scanCode, modifiers);
-            handleInventoryRender(InstancedValues.getInstance().inventoryEntrySelected);
+            handleInventoryRender(iv.inventoryEntrySelected);
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
@@ -153,6 +157,7 @@ public class InventoryScreen extends MainMenuScreenE {
         slm = new ScrollableListModule(MinecraftClient.getInstance(), InventorySlotModule.scale * 4 + 40, height - 80, 80, 56);
         slm.setRenderBackground(false);
         slm.setX(slmXPrev);
+        slm.setScrollbarPosition(slm.getX() + InventorySlotModule.scale * 4 + 50);
 
         ScrollableListModule.ListEntry lastRow = null;
         int j = 0;
@@ -202,6 +207,33 @@ public class InventoryScreen extends MainMenuScreenE {
     @Override
     public void close() {
         client.setScreen(null);
+    }
+
+    @Override
+    public void handleSubGroupChange(int keyCode) {
+        switch (keyCode) {
+            case GLFW.GLFW_KEY_W ->  {
+                if (this.subCategoryEntered) return;
+                if (iv.inventoryEntrySelected == 0) {
+                    iv.inventoryEntrySelected = 6;
+                } else {
+                    iv.inventoryEntrySelected--;
+                }
+            }
+            case GLFW.GLFW_KEY_S -> {
+                if (this.subCategoryEntered) return;
+                if (iv.inventoryEntrySelected == 6) {
+                    iv.inventoryEntrySelected = 0;
+                } else {
+                    iv.inventoryEntrySelected++;
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean isSubGroupEntered() {
+        return this.subCategoryEntered;
     }
 
     public int getMenuSelected() { return this.menuSelected; }
