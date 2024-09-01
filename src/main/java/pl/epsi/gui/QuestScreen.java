@@ -236,11 +236,6 @@ public class QuestScreen extends MainMenuScreenE {
             addChildAndRemove(slm);
         }
     }
-
-    @Override
-    public void close() {
-        client.setScreen(null);
-    }
     
     @Override
     public void handleSubGroupChange(int keyCode) {

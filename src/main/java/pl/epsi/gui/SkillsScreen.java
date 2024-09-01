@@ -20,11 +20,6 @@ public class SkillsScreen extends MainMenuScreenE {
     }
 
     @Override
-    public void close() {
-        client.setScreen(null);
-    }
-
-    @Override
     public void handleSubGroupChange(int keyCode) {
 
     }

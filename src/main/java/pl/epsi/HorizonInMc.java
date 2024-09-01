@@ -10,6 +10,7 @@ import pl.epsi.blocks.HorizonBlocks;
 import pl.epsi.event.EventImpl;
 import pl.epsi.events.MainMenuKeybindListener;
 import pl.epsi.events.TravelToMarkerRenderer;
+import pl.epsi.file.FileManagerImpl;
 import pl.epsi.items.HorizonItems;
 import pl.epsi.player.CustomPlayer;
 import pl.epsi.player.quest.*;
@@ -35,31 +36,9 @@ public class HorizonInMc implements ModInitializer {
 		events.add(new TravelToMarkerRenderer());
 		events.add(subtitleRenderer);
 		events.add(QuestListener.getInstance());
+		events.add(new FileManagerImpl());
 
 		events.forEach(e -> e.setEnabled(true));
-
-		Quest test = new Quest(Text.literal("name"), Text.literal("desc"), 4, QuestCategory.MAIN);
-		Quest test2 = new Quest(Text.literal("Shadow From the Past"), Text.literal("desc"), 5, QuestCategory.MAIN);
-		Quest test3 = new Quest(Text.literal("name"), Text.literal("desc"), 6, QuestCategory.MAIN);
-		Quest test4 = new Quest(Text.literal("name"), Text.literal("desc"), 7, QuestCategory.MAIN);
-		Quest t3st = new Quest(Text.literal("name1"), Text.literal("desc"), 4, QuestCategory.MAIN);
-		Quest test1 = new Quest(Text.literal("name2"), Text.literal("desc"), 4, QuestCategory.MAIN);
-		Quest t3st2 = new Quest(Text.literal("name3"), Text.literal("desc"), 4, QuestCategory.MAIN);
-		Quest test5 = new Quest(Text.literal("side"), Text.literal("desc"), 4, QuestCategory.SIDE);
-		Quest test6 = new Quest(Text.literal("errands"), Text.literal("desc"), 4, QuestCategory.ERRANDS);
-
-		test1.setStatus(QuestStatus.STATUS_COMPLETED);
-		t3st2.setStatus(QuestStatus.STATUS_COMPLETED);
-		TravelStep step = new TravelStep(Text.literal("step name"), Text.literal("desc name"), 2);
-
-		step.addPoint(new Vector3d(50.5, 64.5, 50.5));
-		step.addPoint(new Vector3d(60.5, 64.5, 60.5));
-		step.addPoint(new Vector3d(70.5, 64.5, 70.5));
-
-		CustomPlayer.getInstance().setCurrentQuest(test5);
-		test.steps.add(step);
-		test.rewards.add(new XpReward(28000));
-		test.rewards.add(new SkillPointReward(2));
 	}
 
 }

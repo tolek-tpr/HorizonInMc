@@ -1,24 +1,24 @@
 package pl.epsi.player.quest;
 
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 public class Quest {
-    public List<QuestStep> steps = new LinkedList<>();
-    public List<Reward> rewards = new ArrayList<>();
+    public LinkedList<QuestStep> steps = new LinkedList<>();
+    public ArrayList<Reward> rewards = new ArrayList<>();
     private QuestStatus status;
     private Integer currentStep = 0;
     private int minLevel;
-    private Text name;
-    private Text description;
+    private String name;
+    private String description;
     private QuestCategory category;
 
     public Quest(Text name, Text description, int minLevel, QuestCategory category) {
-        this.name = name;
-        this.description = description;
+        this.name = name.getString();
+        this.description = description.getString();
         this.minLevel = minLevel;
         this.category = category;
 
@@ -84,19 +84,19 @@ public class Quest {
     }
 
     public Text getName() {
-        return name;
+        return Text.literal(name);
     }
 
     public void setName(Text name) {
-        this.name = name;
+        this.name = name.getString();
     }
 
     public Text getDescription() {
-        return description;
+        return Text.literal(description);
     }
 
     public void setDescription(Text description) {
-        this.description = description;
+        this.description = description.getString();
     }
 
     public QuestCategory getCategory() {

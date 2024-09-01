@@ -10,18 +10,18 @@ import java.util.List;
 
 public class TravelStep extends QuestStep {
 
-    private List<Vector3d> points = new LinkedList<>();
-    private MinecraftClient client = MinecraftClient.getInstance();
+    private LinkedList<Vector3d> points = new LinkedList<>();
     private Integer currentPoint;
     private int detectRadius;
 
     public TravelStep(Text name, Text description, int detectRadius) {
-        super(name, description);
-
+        super(name, description, TravelStep.class);
         currentPoint = 0;
         this.detectRadius = detectRadius;
     }
 
+    public void setPoints(LinkedList<Vector3d> points) { this.points = points; }
+    public void setCurrentPoint(int point) { this.currentPoint = point; }
     public void addPoint(Vector3d point) {
         points.add(point);
     }
@@ -31,6 +31,8 @@ public class TravelStep extends QuestStep {
     }
 
     public void onUpdate() {
+        MinecraftClient client = MinecraftClient.getInstance();
+
         if (client.player == null) return;
         Vector3d position = new Vector3d(client.player.getPos().x, client.player.getPos().y,
                 client.player.getPos().z);

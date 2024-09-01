@@ -1,25 +1,28 @@
 package pl.epsi.player.quest;
 
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public abstract class QuestStep {
 
     private QuestStatus status = QuestStatus.STATUS_PENDING;
     private boolean isMajor = false;
-    private Text name;
-    private Text description;
+    private String name;
+    private String description;
+    private String type;
 
-    public QuestStep(Text name, Text description) {
-        this.name = name;
-        this.description = description;
+    public QuestStep(Text name, Text description, Class type) {
+        this.name = name.getString();
+        this.description = description.getString();
+        this.type = type.getName();
     }
 
     public Text getName() {
-        return name;
+        return Text.literal(name);
     }
 
     public Text getDescription() {
-        return description;
+        return Text.literal(description);
     }
 
     public QuestStatus getStatus() {
@@ -33,6 +36,7 @@ public abstract class QuestStep {
     public boolean isMajor() {
         return isMajor;
     }
+    public void setMajor(boolean major) { this.isMajor = major; }
 
     public void announceCompleted() {
         System.out.println("STEP COMPLETED");

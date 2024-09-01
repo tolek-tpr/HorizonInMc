@@ -1,17 +1,35 @@
 package pl.epsi.events;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.Camera;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4d;
 import org.joml.Vector3d;
+import org.lwjgl.opengl.GL20;
+import pl.epsi.HorizonInMc;
 import pl.epsi.event.EventImpl;
 import pl.epsi.event.EventManager;
 import pl.epsi.event.HudRenderCallbackListener;
 import pl.epsi.mixin.client.GameRendererInvoker;
 import pl.epsi.player.CustomPlayer;
 import pl.epsi.player.quest.*;
+import pl.epsi.render.HorizonShader;
+import pl.epsi.render.RenderUtils;
+import pl.epsi.util.HorizonUtil;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.FloatBuffer;
+import java.nio.file.Path;
+import java.util.Optional;
 
 public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallbackListener {
 
@@ -45,19 +63,23 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
     }
 
     public void draw(DrawContext context, float tickDelta, TravelStep objective) {
+        TextRenderer tx = MinecraftClient.getInstance().textRenderer;
         Camera camera = client.gameRenderer.getCamera();
         Vector3d point = objective.getCurrentPoint();
         Vector3d position = new Vector3d(point.x, point.y, point.z);
-        Matrix4d worldToScreenSpace = new Matrix4d();
-        double fov = ((GameRendererInvoker) client.gameRenderer)
-                .horizon_getFov(camera, tickDelta, true);
-        double aspect = (double) client.getWindow().getWidth() / client.getWindow().getHeight();
         double width = client.getWindow().getScaledWidth();
         double height = client.getWindow().getScaledHeight();
         Identifier i = new Identifier("horizoninmc", "exclamation_point");
+        Vec3d posInternal = client.player.getPos();
+        Vector3d playerPos = new Vector3d(posInternal.x, posInternal.y, posInternal.z);
+        double distance = playerPos.distance(position);
+        MatrixStack matrixStack = context.getMatrices();
 
-        worldToScreenSpace.setPerspective(Math.toRadians(fov), aspect,
-                0.05, getFarPlaceViewDistance());
+        matrixStack.push();
+        Matrix4d matrix = new Matrix4d();
+        matrixStack.peek().getPositionMatrix().get(matrix);
+
+        Matrix4d worldToScreenSpace = RenderUtils.getBasicProjectionMatrix(client, tickDelta, matrix);
 
         worldToScreenSpace.translateLocal(1, -1, 0);
         worldToScreenSpace.scaleLocal(width / 2, -height / 2, 1.0);
@@ -71,6 +93,11 @@ public class TravelToMarkerRenderer extends EventImpl implements HudRenderCallba
         if (position.x > width || position.y > height || position.z < 0 ||
             position.x < 0 || position.y < 0 || position.z > 1) return;
         context.drawGuiTexture(i, (int) position.x, (int) position.y, 16, 16);
+
+        position.add(new Vector3d(-tx.getWidth(Math.round(distance) + " Steps") / 2 + 8, 0.5, 0));
+
+        context.drawTextWithShadow(tx, Math.round(distance) + " Steps", (int) position.x, (int) position.y, 0xe3d7d7);
+        matrixStack.pop();
     }
 
 }

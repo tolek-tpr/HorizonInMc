@@ -205,11 +205,6 @@ public class InventoryScreen extends MainMenuScreenE {
     }*/
 
     @Override
-    public void close() {
-        client.setScreen(null);
-    }
-
-    @Override
     public void handleSubGroupChange(int keyCode) {
         switch (keyCode) {
             case GLFW.GLFW_KEY_W ->  {
