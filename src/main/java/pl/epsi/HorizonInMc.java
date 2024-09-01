@@ -11,6 +11,7 @@ import pl.epsi.event.EventImpl;
 import pl.epsi.events.MainMenuKeybindListener;
 import pl.epsi.events.TravelToMarkerRenderer;
 import pl.epsi.file.FileManagerImpl;
+import pl.epsi.gui.inGame.WeaponsOverlay;
 import pl.epsi.items.HorizonItems;
 import pl.epsi.player.CustomPlayer;
 import pl.epsi.player.quest.*;
@@ -25,6 +26,7 @@ public class HorizonInMc implements ModInitializer {
 	public static final String MOD_ID = "horizoninmc";
 	public ArrayList<EventImpl> events = new ArrayList<>();
 	public static final SubRenderer subtitleRenderer = new SubRenderer();
+	public static final WeaponsOverlay weaponsOverlay = WeaponsOverlay.getInstance();
 
 	@Override
 	public void onInitialize() {
@@ -37,6 +39,7 @@ public class HorizonInMc implements ModInitializer {
 		events.add(subtitleRenderer);
 		events.add(QuestListener.getInstance());
 		events.add(new FileManagerImpl());
+		events.add(weaponsOverlay);
 
 		events.forEach(e -> e.setEnabled(true));
 	}
